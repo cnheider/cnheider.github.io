@@ -6,4 +6,6 @@ categories: status update
 ---
 The site is now up
 
+http://cnheider.github.io/gyrocam
+
 
