@@ -12,7 +12,7 @@ description: >
   Ideas, theory and stuff..
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://cnheider.github.io" # the base hostname & protocol for your site
-github_username:  cnHeider
+github_username: cnHeider
 
 # Build settings
 markdown: kramdown
