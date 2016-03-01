@@ -25,7 +25,10 @@ I myself has been hesitant towards atom and still is, some real changes towards 
 
 
 Ressources:
-https://github.com/pfalcon/esp-open-sdk - ESP8266 SDK
-http://esp8266.net/ - 
-http://www.esp8266.com/ - Community site
-https://github.com/platformio - PlatformIO 
+<ol>
+  <li>https://github.com/pfalcon/esp-open-sdk - ESP8266 SDK</li>
+  <li>https://github.com/esp8266/Arduino - Arduino like syntax for ESP8266</li>
+  <li>http://esp8266.net/ - </li>
+  <li>http://www.esp8266.com/ - Community site </li>
+  <li>https://github.com/platformio - PlatformIO </li>
+</ol>
