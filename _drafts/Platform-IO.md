@@ -8,7 +8,8 @@ Firstly i want to introduce you a neat little thing..
 
 **ESP8266**
 
-![Picture]{}
+![Picture]{assets/2016-03-01.11.39.11.jpg}
+
 The ESP8266 wifi module by itself, is a fantastic platform and tool, but for new comers of electrical and software engineering, it might not seem so accessible. 
 
 This is what i will try to change, because i think it is a great tool, that every IOT or home automation enthusiasts should experience. 
@@ -18,6 +19,8 @@ This is what i will try to change, because i think it is a great tool, that ever
 To ease the process of developing with this module, i will also introduce you to..
 
 **PlatformIO**
+
+![Picture]{assets/2016-03-05-105637_1366x768_scrot.png}
 
 PlatformIO is a 
 
