@@ -3,4 +3,13 @@ layout: page
 title: About
 permalink: /about/
 ---
-I am good
+
+#Christian Heider Nielsen
+Profile - Facts
+
+![Icon](/images/site/logo.png)
+
+-   22 years
+-   Danish
+
+Software Engineering(Computer Science) student at Aalborg University, Denmark ![DK](images/site/dk.png)
