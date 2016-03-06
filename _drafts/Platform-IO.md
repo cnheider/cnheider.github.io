@@ -3,8 +3,6 @@ layout: post
 title: ESP8266 And Platform IO
 ---
 
-# ESP8266 And Platform IO
-
 Firstly i want to introduce you a neat little thing..
 
 **ESP8266**

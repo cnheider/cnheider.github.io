@@ -1,11 +1,9 @@
 ---
 layout: post
-title: Easymotion
+title: Easymotion plugin
 ---
 
 ![Easymotion](/images/2016/03/easymotion.png)
-
-#Easymotion plugin
 
 **Rant**
 

@@ -3,9 +3,9 @@ layout: page
 title: About
 permalink: /about/
 ---
-
-#Christian Heider Nielsen
 Profile - Facts
+
+**Christian Heider Nielsen**
 
 ![Icon](/images/site/logo.png)
 
