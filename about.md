@@ -12,4 +12,4 @@ Profile - Facts
 -   22 years
 -   Danish
 
-Software Engineering(Computer Science) student at Aalborg University, Denmark ![DK](images/site/dk.png)
+Software Engineering(Computer Science) student at Aalborg University, Denmark ![DK](/images/site/dk.png)
