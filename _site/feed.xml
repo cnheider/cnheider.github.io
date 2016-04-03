@@ -6,24 +6,246 @@
 </description>
     <link>https://cnheider.net/</link>
     <atom:link href="https://cnheider.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 06 Mar 2016 15:06:08 +0100</pubDate>
-    <lastBuildDate>Sun, 06 Mar 2016 15:06:08 +0100</lastBuildDate>
+    <pubDate>Sun, 03 Apr 2016 23:17:50 +0200</pubDate>
+    <lastBuildDate>Sun, 03 Apr 2016 23:17:50 +0200</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
+    
+      <item>
+        <title>ProbeIO</title>
+        <description>&lt;p&gt;This code is specificly developed for the Witty cloud development board , but can for sure be modified to be used on any other ESP8266 module. The Witty cloud development board includes a photoresistor which can be used to measure the light intensity of a room or environment.&lt;/p&gt;
+
+&lt;p&gt;The code measures the light intensity 6 times and average the value, easy and quick little fix(but for sure not proper the way) to eliminate any spurious noise from the readings of so called light sensor. It utilises an MQTT client to report/publish the gathered result to anyone who is interested, through an MQTT broker, more on &lt;a href=&quot;MQTTBLOG&quot;&gt;this&lt;/a&gt;. One usecase could be to store the information for later use in a database. For more information on how utilise this data, see my &lt;a href=&quot;&quot;&gt;Internet of Probes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;After having published the current values of the light intensity, the ESP-12F module is into deep sleep, a state in which the module consume much less energy, for 8 seconds, only to reboot and do the same procedure again. Just remember to connect D0 with RST on the development board, otherwise the module wont boot by it self again, before the power is cut or RST button is pressed.&lt;/p&gt;
+
+&lt;p&gt;The code allows for Over-the-Air(OTA) updates, at the beginning of each loop, it is checked if any updates are available for device, meaning someone is currently trying to broadcast an update to the device.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://raw.githubusercontent.com/cnHeider/pio/c515f387f9f4faaad75b5ca3c5626d82f02e5930/src/main.cpp&quot;&gt;main.cpp&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;```cpp
+#include &lt;esp8266wifi.h&gt;
+#include &lt;esp8266wifimulti.h&gt;
+#include &lt;esp8266mdns.h&gt;
+#include &lt;esp8266httpclient.h&gt;
+#include &lt;wifiudp.h&gt;
+#include &lt;wificlient.h&gt;
+#include &lt;pubsubclient.h&gt;
+#include &lt;lightsensor.h&gt;
+#include &lt;arduinoota.h&gt;&lt;/arduinoota.h&gt;&lt;/lightsensor.h&gt;&lt;/pubsubclient.h&gt;&lt;/wificlient.h&gt;&lt;/wifiudp.h&gt;&lt;/esp8266httpclient.h&gt;&lt;/esp8266mdns.h&gt;&lt;/esp8266wifimulti.h&gt;&lt;/esp8266wifi.h&gt;&lt;/p&gt;
+
+&lt;p&gt;const char* ssid = “&lt;strong&gt;Replace this&lt;/strong&gt;”;
+const char* pass = “&lt;strong&gt;Replace this&lt;/strong&gt;”;&lt;/p&gt;
+
+&lt;p&gt;const char* mqtt_server = “m21.cloudmqtt.com”;
+const char* mqtt_user = “&lt;strong&gt;Replace this&lt;/strong&gt;”;
+const char* mqtt_pass = “&lt;strong&gt;Replace this&lt;/strong&gt;”;
+const unsigned mqtt_port = 15739;&lt;/p&gt;
+
+&lt;p&gt;const char* mqtt_topic = “lightingLivingRoom”;&lt;/p&gt;
+
+&lt;p&gt;WiFiClient espClient;
+PubSubClient client(espClient);
+long lastMsg = 0;
+char msg[50];
+int value = 0;&lt;/p&gt;
+
+&lt;p&gt;void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print(“Message arrived [”);
+  Serial.print(topic);
+  Serial.print(“] “);
+  for (int i = 0; i &amp;lt; length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();&lt;/p&gt;
+
+&lt;p&gt;// Switch on the LED if an 1 was received as first character
+  if ((char)payload[0] == ‘1’) {
+    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
+    // but actually the LED is on; this is because
+    // it is acive low on the ESP-01)
+  } else {
+    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+  }&lt;/p&gt;
+
+&lt;p&gt;}&lt;/p&gt;
+
+&lt;p&gt;void reconnect() {
+  // Loop until we’re reconnected
+  while (!client.connected()) {
+    Serial.println(“Attempting MQTT connection…”);
+    // Attempt to connect
+    if (client.connect(“ESP8266Client”, mqtt_user, mqtt_pass)) {
+      Serial.println(“connected”);
+      // Once connected, publish an announcement…
+      client.publish(“alive”, “hello world from ESP8266Client1”);
+      // … and resubscribe
+      client.subscribe(“inTopic”);
+    } else {
+      Serial.print(“failed, rc=”);
+      Serial.print(client.state());
+      Serial.println(“ try again in 5 seconds”);
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}&lt;/p&gt;
+
+&lt;p&gt;void setup_wifi() {
+  WiFi.mode(WIFI_STA);
+  WiFi.setPhyMode(WIFI_PHY_MODE_11N); // Low power
+  WiFi.begin(ssid, pass);
+  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+    Serial.println(“Connection Failed! Rebooting…”);
+    delay(5000);
+    ESP.restart();
+  }&lt;/p&gt;
+
+&lt;p&gt;// Port defaults to 8266
+  // ArduinoOTA.setPort(8266);&lt;/p&gt;
+
+&lt;p&gt;// Hostname defaults to esp8266-[ChipID]
+  //ArduinoOTA.setHostname(“ESP8266-WITTY-RGB”);&lt;/p&gt;
+
+&lt;p&gt;// No authentication by default
+  //ArduinoOTA.setPassword((const char *)”admin”);&lt;/p&gt;
+
+&lt;p&gt;ArduinoOTA.onStart([]() {
+    Serial.println(“Start”);
+  });
+  ArduinoOTA.onEnd([]() {
+    Serial.println(“\nEnd”);
+  });
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+    Serial.printf(“Progress: %u%%\r”, (progress / (total / 100)));
+  });
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf(“Error[%u]: “, error);
+    if (error == OTA_AUTH_ERROR) Serial.println(“Auth Failed”);
+    else if (error == OTA_BEGIN_ERROR) Serial.println(“Begin Failed”);
+    else if (error == OTA_CONNECT_ERROR) Serial.println(“Connect Failed”);
+    else if (error == OTA_RECEIVE_ERROR) Serial.println(“Receive Failed”);
+    else if (error == OTA_END_ERROR) Serial.println(“End Failed”);
+  });
+  ArduinoOTA.begin();
+  Serial.println(“OTA Ready”);
+  Serial.print(“IP address: “);
+  Serial.println(WiFi.localIP());
+}&lt;/p&gt;
+
+&lt;p&gt;void setup(){
+  Serial.begin(115200);
+  Serial.println(“Booting”);
+  setup_wifi();
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
+}&lt;/p&gt;
+
+&lt;p&gt;void loop(){
+  ArduinoOTA.handle();
+  if (!client.connected()){
+    reconnect();
+  }
+  client.loop();&lt;/p&gt;
+
+&lt;p&gt;int value = LightSensor.getAveragedValueTimes(6);
+  snprintf (msg, 75, “device: %ld lighting: %ld”, “0”, value);
+  Serial.print(“Publish message: “);
+  Serial.println(msg);
+  client.publish(mqtt_topic, msg);&lt;/p&gt;
+
+&lt;p&gt;Serial.println(“Going to sleep for 8 sec”);
+  ESP.deepSleep(1000000*8); // 8 seconds deepsleep
+  Serial.println(“Sleeping”); // Should not be reached and printed
+}
+```&lt;/p&gt;
+
+&lt;p&gt;Some ressources:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/cnHeider/pio&quot;&gt;ProbeIO&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 03 Apr 2016 23:14:00 +0200</pubDate>
+        <link>https://cnheider.net/2016/04/03/ProbeIO.html</link>
+        <guid isPermaLink="true">https://cnheider.net/2016/04/03/ProbeIO.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>ESP8266 And Platform IO</title>
+        <description>&lt;p&gt;I am writing this little introduction because I found some great tools, that I think that every IoT or home automation enthusiasts should know and experience.&lt;/p&gt;
+
+&lt;p&gt;Firstly i want to introduce you a neat little thing..&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The ESP8266&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2016/03/esp8266.jpg&quot; alt=&quot;ESP8266&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;ESP8266 is a System-On-a-Chip(SoC). The module by itself, is a fantastic platform and tool, but for new comers of electrical and software engineering, it might not seem so accessible. Fortunately there are some really cheap development boards out there, most of them is based on the ESP-12 chip. To be more specific the improved ESP-12E’s and ESP-12F’s(&lt;a href=&quot;http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family&quot;&gt;module family&lt;/a&gt;). The development boards has integrated USB to TTL debug interfaces, so theres is no need for external hardware and wiring just to program them, which may be quite a hurdle to some.&lt;/p&gt;
+
+&lt;p&gt;I recommend modules like these:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.aliexpress.com/af/witty-cloud.html&quot;&gt;Witty cloud&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.aliexpress.com/wholesale?catId=0&amp;amp;initiative_id=SB_20160403065815&amp;amp;SearchText=NodeMCU+v3&quot;&gt;NodeMCU v3&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To ease the process of developing with this module, i will also encourage you to try out &lt;a href=&quot;https://github.com/cnHeider/pio&quot;&gt;this&lt;/a&gt; little project, that I also made a little &lt;a href=&quot;pioblog&quot;&gt;write up&lt;/a&gt; on. The project was build using..&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The PlatformIO&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2016/03/platformio.png&quot; alt=&quot;PlatformIO&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;PlatformIO is an ecosystem for IoT development, it comes with integration for IDE such as: Arduino, Atom, CLion, Eclipse, Emacs, Energia, Qt Creator, Sublime Text, Vim, Visual Studio. The suite can be utilised with great pleasure, for a large variety of other embedded systems, other than ESP8266 module.&lt;/p&gt;
+
+&lt;p&gt;The most noticeable feature of the PlatformIO ecosystem for me, is the so well implemented PlatformIO IDE, an integration for Atom environment. The integration include a serial monitor with the atom environment, automation of all kinds of tasks such a deployment of new builds and fetches of missing dependencies.&lt;/p&gt;
+
+&lt;p&gt;I myself has been hesitant towards atom and still is.. Due to my very slow i3 processor, my whole linux setup is lightweight. See my post on &lt;a href=&quot;cnheider.net/setup&quot;&gt;My Setup&lt;/a&gt;. The &lt;a href=&quot;http://atom.io&quot;&gt;Atom&lt;/a&gt; editor since back when I spun it up the first time has been slow and in need of some real changes towards speed and responsiveness. I arrived this conclusion times multiple times, and ended up discarding it every time. This time I might just stay for good, largely affected by the PlatformIO plug-in suite.&lt;/p&gt;
+
+&lt;p&gt;A another neat little feature is that the command &lt;code class=&quot;highlighter-rouge&quot;&gt;platformio run&lt;/code&gt; supports Over-The-Air(OTA) updates, the build flag &lt;code class=&quot;highlighter-rouge&quot;&gt;--upload-port&lt;/code&gt; allows upload ports to be other than some file descriptors of your system, it allows upload ports to ip-addresses and domains of your network.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bash
+platformio run --target upload --upload-port IP_ADDRESS_HERE or mDNS_NAME.local
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Some ressources, where you get additional information:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/pfalcon/esp-open-sdk&quot;&gt;ESP8266 SDK&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/esp8266/Arduino&quot;&gt;Arduino like syntax for ESP8266&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://esp8266.net/&quot;&gt;ESP8266 Community&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.esp8266.com/&quot;&gt;Community site&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/platformio&quot;&gt;PlatformIO&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 03 Apr 2016 00:00:00 +0200</pubDate>
+        <link>https://cnheider.net/2016/04/03/Platform-IO.html</link>
+        <guid isPermaLink="true">https://cnheider.net/2016/04/03/Platform-IO.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>dotConfig</title>
         <description>
 </description>
         <pubDate>Sun, 06 Mar 2016 11:40:00 +0100</pubDate>
-        <link>https://cnheider.net/2016/03/06/dotconfig.html</link>
-        <guid isPermaLink="true">https://cnheider.net/2016/03/06/dotconfig.html</guid>
+        <link>https://cnheider.net/2016/03/06/dotConfig.html</link>
+        <guid isPermaLink="true">https://cnheider.net/2016/03/06/dotConfig.html</guid>
         
         
       </item>
     
       <item>
         <title>Internet Of Probes</title>
-        <description>&lt;p&gt;Esp8266 project&lt;/p&gt;
+        <description>&lt;p&gt;mqtt&lt;/p&gt;
+
+&lt;p&gt;cloudmqtt&lt;/p&gt;
+
+&lt;p&gt;InfluxDB&lt;/p&gt;
 </description>
         <pubDate>Thu, 25 Feb 2016 00:00:00 +0100</pubDate>
         <link>https://cnheider.net/2016/02/25/Internet-Of-Probes.html</link>
@@ -34,7 +256,7 @@
     
       <item>
         <title>Quadcopter build</title>
-        <description>&lt;p&gt;I received this package in the mail some days ago, and now i can finally begin to experiment with my dronecam(Link coming) project.&lt;/p&gt;
+        <description>&lt;p&gt;I received this package in the mail some days ago, and now i can finally begin to experiment with my &lt;a href=&quot;cnheider.net/dronecam&quot;&gt;dronecam&lt;/a&gt; project.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/2016/03/overview.jpg&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
 
