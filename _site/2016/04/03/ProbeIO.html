@@ -71,7 +71,9 @@
 
 <p>The code allows for Over-the-Air(OTA) updates, at the beginning of each loop, it is checked if any updates are available for device, meaning someone is currently trying to broadcast an update to the device.</p>
 
-<p><a href="https://raw.githubusercontent.com/cnHeider/pio/c515f387f9f4faaad75b5ca3c5626d82f02e5930/src/main.cpp">main.cpp</a></p>
+<p>Last thing be sure to either set your environment variable <a href="http://docs.platformio.org/en/latest/envvars.html#envvar-PLATFORMIO_BUILD_FLAGS"><code class="highlighter-rouge">PLATFORMIO_BUILD_FLAGS</code></a> or change the defines in the code.</p>
+
+<p><a href="https://raw.githubusercontent.com/cnHeider/pio/master/src/main.cpp">main.cpp</a></p>
 
 <p>```cpp
 #include <esp8266wifi.h>
@@ -84,15 +86,27 @@
 #include <lightsensor.h>
 #include <arduinoota.h></arduinoota.h></lightsensor.h></pubsubclient.h></wificlient.h></wifiudp.h></esp8266httpclient.h></esp8266mdns.h></esp8266wifimulti.h></esp8266wifi.h></p>
 
-<p>const char* ssid = “<strong>Replace this</strong>”;
-const char* pass = “<strong>Replace this</strong>”;</p>
-
-<p>const char* mqtt_server = “m21.cloudmqtt.com”;
-const char* mqtt_user = “<strong>Replace this</strong>”;
-const char* mqtt_pass = “<strong>Replace this</strong>”;
-const unsigned mqtt_port = 15739;</p>
-
-<p>const char* mqtt_topic = “lightingLivingRoom”;</p>
+<h1 id="ifndef-wifissid">ifndef WIFI_SSID</h1>
+<p>#define WIFI_SSID “ReplaceThis”
+#endif
+#ifndef WIFI_PASS
+#define WIFI_PASS “ReplaceThis”
+#endif
+#ifndef MQTT_SERVER
+#define MQTT_SERVER “m21.cloudmqtt.com”
+#endif
+#ifndef MQTT_USER
+#define MQTT_USER “ReplaceThis”
+#endif
+#ifndef MQTT_PASS
+#define MQTT_PASS “ReplaceThis”
+#endif
+#ifndef MQTT_PORT
+#define MQTT_PORT 15739 // MQTT_PORT default for me
+#endif
+#ifndef MQTT_TOPIC
+#define MQTT_TOPIC “lightingLivingRoom” // MQTT_TOPIC default for me
+#endif</p>
 
 <p>WiFiClient espClient;
 PubSubClient client(espClient);
@@ -125,7 +139,7 @@ int value = 0;</p>
   while (!client.connected()) {
     Serial.println(“Attempting MQTT connection…”);
     // Attempt to connect
-    if (client.connect(“ESP8266Client”, mqtt_user, mqtt_pass)) {
+    if (client.connect(“ESP8266Client”, MQTT_USER, MQTT_PASS)) {
       Serial.println(“connected”);
       // Once connected, publish an announcement…
       client.publish(“alive”, “hello world from ESP8266Client1”);
@@ -144,7 +158,7 @@ int value = 0;</p>
 <p>void setup_wifi() {
   WiFi.mode(WIFI_STA);
   WiFi.setPhyMode(WIFI_PHY_MODE_11N); // Low power
-  WiFi.begin(ssid, pass);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     Serial.println(“Connection Failed! Rebooting…”);
     delay(5000);
@@ -187,7 +201,7 @@ int value = 0;</p>
   Serial.begin(115200);
   Serial.println(“Booting”);
   setup_wifi();
-  client.setServer(mqtt_server, mqtt_port);
+  client.setServer(MQTT_SERVER, MQTT_PORT);
   client.setCallback(callback);
 }</p>
 
@@ -202,7 +216,7 @@ int value = 0;</p>
   snprintf (msg, 75, “device: %ld lighting: %ld”, “0”, value);
   Serial.print(“Publish message: “);
   Serial.println(msg);
-  client.publish(mqtt_topic, msg);</p>
+  client.publish(MQTT_TOPIC, msg);</p>
 
 <p>Serial.println(“Going to sleep for 8 sec”);
   ESP.deepSleep(1000000*8); // 8 seconds deepsleep

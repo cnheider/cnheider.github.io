@@ -6,8 +6,8 @@
 </description>
     <link>https://cnheider.net/</link>
     <atom:link href="https://cnheider.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Apr 2016 09:09:37 +0200</pubDate>
-    <lastBuildDate>Mon, 04 Apr 2016 09:09:37 +0200</lastBuildDate>
+    <pubDate>Mon, 04 Apr 2016 16:53:56 +0200</pubDate>
+    <lastBuildDate>Mon, 04 Apr 2016 16:53:56 +0200</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -20,7 +20,9 @@
 
 &lt;p&gt;The code allows for Over-the-Air(OTA) updates, at the beginning of each loop, it is checked if any updates are available for device, meaning someone is currently trying to broadcast an update to the device.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://raw.githubusercontent.com/cnHeider/pio/c515f387f9f4faaad75b5ca3c5626d82f02e5930/src/main.cpp&quot;&gt;main.cpp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Last thing be sure to either set your environment variable &lt;a href=&quot;http://docs.platformio.org/en/latest/envvars.html#envvar-PLATFORMIO_BUILD_FLAGS&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PLATFORMIO_BUILD_FLAGS&lt;/code&gt;&lt;/a&gt; or change the defines in the code.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://raw.githubusercontent.com/cnHeider/pio/master/src/main.cpp&quot;&gt;main.cpp&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;```cpp
 #include &lt;esp8266wifi.h&gt;
@@ -33,15 +35,27 @@
 #include &lt;lightsensor.h&gt;
 #include &lt;arduinoota.h&gt;&lt;/arduinoota.h&gt;&lt;/lightsensor.h&gt;&lt;/pubsubclient.h&gt;&lt;/wificlient.h&gt;&lt;/wifiudp.h&gt;&lt;/esp8266httpclient.h&gt;&lt;/esp8266mdns.h&gt;&lt;/esp8266wifimulti.h&gt;&lt;/esp8266wifi.h&gt;&lt;/p&gt;
 
-&lt;p&gt;const char* ssid = “&lt;strong&gt;Replace this&lt;/strong&gt;”;
-const char* pass = “&lt;strong&gt;Replace this&lt;/strong&gt;”;&lt;/p&gt;
-
-&lt;p&gt;const char* mqtt_server = “m21.cloudmqtt.com”;
-const char* mqtt_user = “&lt;strong&gt;Replace this&lt;/strong&gt;”;
-const char* mqtt_pass = “&lt;strong&gt;Replace this&lt;/strong&gt;”;
-const unsigned mqtt_port = 15739;&lt;/p&gt;
-
-&lt;p&gt;const char* mqtt_topic = “lightingLivingRoom”;&lt;/p&gt;
+&lt;h1 id=&quot;ifndef-wifissid&quot;&gt;ifndef WIFI_SSID&lt;/h1&gt;
+&lt;p&gt;#define WIFI_SSID “ReplaceThis”
+#endif
+#ifndef WIFI_PASS
+#define WIFI_PASS “ReplaceThis”
+#endif
+#ifndef MQTT_SERVER
+#define MQTT_SERVER “m21.cloudmqtt.com”
+#endif
+#ifndef MQTT_USER
+#define MQTT_USER “ReplaceThis”
+#endif
+#ifndef MQTT_PASS
+#define MQTT_PASS “ReplaceThis”
+#endif
+#ifndef MQTT_PORT
+#define MQTT_PORT 15739 // MQTT_PORT default for me
+#endif
+#ifndef MQTT_TOPIC
+#define MQTT_TOPIC “lightingLivingRoom” // MQTT_TOPIC default for me
+#endif&lt;/p&gt;
 
 &lt;p&gt;WiFiClient espClient;
 PubSubClient client(espClient);
@@ -74,7 +88,7 @@ int value = 0;&lt;/p&gt;
   while (!client.connected()) {
     Serial.println(“Attempting MQTT connection…”);
     // Attempt to connect
-    if (client.connect(“ESP8266Client”, mqtt_user, mqtt_pass)) {
+    if (client.connect(“ESP8266Client”, MQTT_USER, MQTT_PASS)) {
       Serial.println(“connected”);
       // Once connected, publish an announcement…
       client.publish(“alive”, “hello world from ESP8266Client1”);
@@ -93,7 +107,7 @@ int value = 0;&lt;/p&gt;
 &lt;p&gt;void setup_wifi() {
   WiFi.mode(WIFI_STA);
   WiFi.setPhyMode(WIFI_PHY_MODE_11N); // Low power
-  WiFi.begin(ssid, pass);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     Serial.println(“Connection Failed! Rebooting…”);
     delay(5000);
@@ -136,7 +150,7 @@ int value = 0;&lt;/p&gt;
   Serial.begin(115200);
   Serial.println(“Booting”);
   setup_wifi();
-  client.setServer(mqtt_server, mqtt_port);
+  client.setServer(MQTT_SERVER, MQTT_PORT);
   client.setCallback(callback);
 }&lt;/p&gt;
 
@@ -151,7 +165,7 @@ int value = 0;&lt;/p&gt;
   snprintf (msg, 75, “device: %ld lighting: %ld”, “0”, value);
   Serial.print(“Publish message: “);
   Serial.println(msg);
-  client.publish(mqtt_topic, msg);&lt;/p&gt;
+  client.publish(MQTT_TOPIC, msg);&lt;/p&gt;
 
 &lt;p&gt;Serial.println(“Going to sleep for 8 sec”);
   ESP.deepSleep(1000000*8); // 8 seconds deepsleep
