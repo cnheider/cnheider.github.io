@@ -30,7 +30,7 @@ The most noticeable feature of the PlatformIO ecosystem for me, is the so well i
 
 I myself has been hesitant towards atom and still is.. Due to my very slow i3 processor, my whole linux setup is lightweight. See my post on [my setup](http://cnheider.net/2016/03/06/dotConfig.html). The [Atom](http://atom.io) editor since back when I spun it up the first time has been slow and in need of some real changes towards speed and responsiveness. I arrived this conclusion times multiple times, and ended up discarding it every time. This time I might just stay for good, largely affected by the PlatformIO plug-in suite.
 
-A another neat little feature is that the command ```platformio run``` supports Over-The-Air(OTA) updates, the build flag ```--upload-port``` allows upload ports to be other than some file descriptors of your system, it allows upload ports to ip-addresses and domains of your network.
+A another neat little feature is that the command `platformio run` supports Over-The-Air(OTA) updates, the build flag `--upload-port` allows upload ports to be other than some file descriptors of your system, it allows upload ports to ip-addresses and domains of your network.
 
 Example:
 
