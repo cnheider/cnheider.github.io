@@ -6,15 +6,15 @@
 </description>
     <link>https://cnheider.net/</link>
     <atom:link href="https://cnheider.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 03 Apr 2016 23:23:16 +0200</pubDate>
-    <lastBuildDate>Sun, 03 Apr 2016 23:23:16 +0200</lastBuildDate>
+    <pubDate>Mon, 04 Apr 2016 09:06:55 +0200</pubDate>
+    <lastBuildDate>Mon, 04 Apr 2016 09:06:55 +0200</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
         <title>ProbeIO</title>
         <description>&lt;p&gt;This code is specificly developed for the Witty cloud development board , but can for sure be modified to be used on any other ESP8266 module. The Witty cloud development board includes a photoresistor which can be used to measure the light intensity of a room or environment.&lt;/p&gt;
 
-&lt;p&gt;The code measures the light intensity 6 times and average the value, easy and quick little fix(but for sure not proper the way) to eliminate any spurious noise from the readings of so called light sensor. It utilises an MQTT client to report/publish the gathered result to anyone who is interested, through an MQTT broker, more on &lt;a href=&quot;MQTTBLOG&quot;&gt;this&lt;/a&gt;. One usecase could be to store the information for later use in a database. For more information on how utilise this data, see my &lt;a href=&quot;&quot;&gt;Internet of Probes&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The code measures the light intensity 6 times and average the value, easy and quick little fix(but for sure not proper the way) to eliminate any spurious noise from the readings of so called light sensor. It utilises an MQTT client to report/publish the gathered result to anyone who is interested, through an MQTT broker, more on &lt;a href=&quot;http://mqtt.org/&quot;&gt;this&lt;/a&gt;. One usecase could be to store the information for later use in a database. For more information on how utilise this data, see my &lt;a href=&quot;&quot;&gt;Internet of Probes&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;After having published the current values of the light intensity, the ESP-12F module is into deep sleep, a state in which the module consume much less energy, for 8 seconds, only to reboot and do the same procedure again. Just remember to connect D0 with RST on the development board, otherwise the module wont boot by it self again, before the power is cut or RST button is pressed.&lt;/p&gt;
 
@@ -191,7 +191,7 @@ int value = 0;&lt;/p&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.aliexpress.com/wholesale?catId=0&amp;amp;initiative_id=SB_20160403065815&amp;amp;SearchText=NodeMCU+v3&quot;&gt;NodeMCU v3&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;To ease the process of developing with this module, i will also encourage you to try out &lt;a href=&quot;https://github.com/cnHeider/pio&quot;&gt;this&lt;/a&gt; little project, that I also made a little &lt;a href=&quot;pioblog&quot;&gt;write up&lt;/a&gt; on. The project was build using..&lt;/p&gt;
+&lt;p&gt;To ease the process of developing with this module, i will also encourage you to try out &lt;a href=&quot;https://github.com/cnHeider/pio&quot;&gt;this&lt;/a&gt; little project, that I also made a little &lt;a href=&quot;http://cnheider.net/2016/04/03/ProbeIO.html&quot;&gt;write up&lt;/a&gt; on. The project was build using..&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;The PlatformIO&lt;/strong&gt;&lt;/p&gt;
 
@@ -201,7 +201,7 @@ int value = 0;&lt;/p&gt;
 
 &lt;p&gt;The most noticeable feature of the PlatformIO ecosystem for me, is the so well implemented PlatformIO IDE, an integration for Atom environment. The integration include a serial monitor with the atom environment, automation of all kinds of tasks such a deployment of new builds and fetches of missing dependencies.&lt;/p&gt;
 
-&lt;p&gt;I myself has been hesitant towards atom and still is.. Due to my very slow i3 processor, my whole linux setup is lightweight. See my post on &lt;a href=&quot;cnheider.net/setup&quot;&gt;My Setup&lt;/a&gt;. The &lt;a href=&quot;http://atom.io&quot;&gt;Atom&lt;/a&gt; editor since back when I spun it up the first time has been slow and in need of some real changes towards speed and responsiveness. I arrived this conclusion times multiple times, and ended up discarding it every time. This time I might just stay for good, largely affected by the PlatformIO plug-in suite.&lt;/p&gt;
+&lt;p&gt;I myself has been hesitant towards atom and still is.. Due to my very slow i3 processor, my whole linux setup is lightweight. See my post on &lt;a href=&quot;http://cnheider.net/2016/03/06/dotConfig.html&quot;&gt;my setup&lt;/a&gt;. The &lt;a href=&quot;http://atom.io&quot;&gt;Atom&lt;/a&gt; editor since back when I spun it up the first time has been slow and in need of some real changes towards speed and responsiveness. I arrived this conclusion times multiple times, and ended up discarding it every time. This time I might just stay for good, largely affected by the PlatformIO plug-in suite.&lt;/p&gt;
 
 &lt;p&gt;A another neat little feature is that the command &lt;code class=&quot;highlighter-rouge&quot;&gt;platformio run&lt;/code&gt; supports Over-The-Air(OTA) updates, the build flag &lt;code class=&quot;highlighter-rouge&quot;&gt;--upload-port&lt;/code&gt; allows upload ports to be other than some file descriptors of your system, it allows upload ports to ip-addresses and domains of your network.&lt;/p&gt;
 
@@ -230,7 +230,7 @@ platformio run --target upload --upload-port IP_ADDRESS_HERE or mDNS_NAME.local
     
       <item>
         <title>dotConfig</title>
-        <description>
+        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/cnHeider/dotConfig&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 06 Mar 2016 11:40:00 +0100</pubDate>
         <link>https://cnheider.net/2016/03/06/dotConfig.html</link>
@@ -256,7 +256,7 @@ platformio run --target upload --upload-port IP_ADDRESS_HERE or mDNS_NAME.local
     
       <item>
         <title>Quadcopter build</title>
-        <description>&lt;p&gt;I received this package in the mail some days ago, and now i can finally begin to experiment with my &lt;a href=&quot;cnheider.net/dronecam&quot;&gt;dronecam&lt;/a&gt; project.&lt;/p&gt;
+        <description>&lt;p&gt;I received this package in the mail some days ago, and now i can finally begin to experiment with my &lt;!--[dronecam](cnheider.net/dronecam)--&gt; project.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/2016/03/overview.jpg&quot; alt=&quot;Overview&quot; /&gt;&lt;/p&gt;
 
