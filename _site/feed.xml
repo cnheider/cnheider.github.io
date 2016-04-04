@@ -6,15 +6,15 @@
 </description>
     <link>https://cnheider.net/</link>
     <atom:link href="https://cnheider.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Apr 2016 09:06:55 +0200</pubDate>
-    <lastBuildDate>Mon, 04 Apr 2016 09:06:55 +0200</lastBuildDate>
+    <pubDate>Mon, 04 Apr 2016 09:09:37 +0200</pubDate>
+    <lastBuildDate>Mon, 04 Apr 2016 09:09:37 +0200</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
         <title>ProbeIO</title>
         <description>&lt;p&gt;This code is specificly developed for the Witty cloud development board , but can for sure be modified to be used on any other ESP8266 module. The Witty cloud development board includes a photoresistor which can be used to measure the light intensity of a room or environment.&lt;/p&gt;
 
-&lt;p&gt;The code measures the light intensity 6 times and average the value, easy and quick little fix(but for sure not proper the way) to eliminate any spurious noise from the readings of so called light sensor. It utilises an MQTT client to report/publish the gathered result to anyone who is interested, through an MQTT broker, more on &lt;a href=&quot;http://mqtt.org/&quot;&gt;this&lt;/a&gt;. One usecase could be to store the information for later use in a database. For more information on how utilise this data, see my &lt;a href=&quot;&quot;&gt;Internet of Probes&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The code measures the light intensity 6 times and average the value, easy and quick little fix(but for sure not proper the way) to eliminate any spurious noise from the readings of so called light sensor. It utilises an MQTT client to report/publish the gathered result to anyone who is interested, through an MQTT broker, more on &lt;a href=&quot;http://mqtt.org/&quot;&gt;this&lt;/a&gt;. One usecase could be to store the information for later use in a database. For more information on how utilise this data, see my &lt;a href=&quot;http://cnheider.net/2016/02/25/Internet-Of-Probes.html&quot;&gt;Internet of Probes&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;After having published the current values of the light intensity, the ESP-12F module is into deep sleep, a state in which the module consume much less energy, for 8 seconds, only to reboot and do the same procedure again. Just remember to connect D0 with RST on the development board, otherwise the module wont boot by it self again, before the power is cut or RST button is pressed.&lt;/p&gt;
 
@@ -230,7 +230,7 @@ platformio run --target upload --upload-port IP_ADDRESS_HERE or mDNS_NAME.local
     
       <item>
         <title>dotConfig</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/cnHeider/dotConfig&quot;&gt;repo&lt;/a&gt;&lt;/p&gt;
+        <description>&lt;!--[repo](https://github.com/cnHeider/dotConfig)--&gt;
 </description>
         <pubDate>Sun, 06 Mar 2016 11:40:00 +0100</pubDate>
         <link>https://cnheider.net/2016/03/06/dotConfig.html</link>
