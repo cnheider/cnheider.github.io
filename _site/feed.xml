@@ -6,8 +6,8 @@
 </description>
     <link>https://cnheider.net/</link>
     <atom:link href="https://cnheider.net/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Apr 2016 20:34:23 +0200</pubDate>
-    <lastBuildDate>Mon, 04 Apr 2016 20:34:23 +0200</lastBuildDate>
+    <pubDate>Wed, 06 Apr 2016 13:12:41 +0200</pubDate>
+    <lastBuildDate>Wed, 06 Apr 2016 13:12:41 +0200</lastBuildDate>
     <generator>Jekyll v3.1.1</generator>
     
       <item>
@@ -246,7 +246,21 @@ platformio run --target upload --upload-port IP_ADDRESS_HERE or mDNS_NAME.local
     
       <item>
         <title>dotConfig</title>
-        <description>&lt;!--[repo](https://github.com/cnHeider/dotConfig)--&gt;
+        <description>&lt;p&gt;After some personal requests for the &lt;a href=&quot;https://github.com/cnHeider/dotConfig&quot;&gt;configs&lt;/a&gt; of my setups, I have published them on github.&lt;/p&gt;
+
+&lt;p&gt;I am running Debian Strech, with non-free repos. My setup is minimal, I am running Openbox, Tint2, Feh and Synapse semantic launcher which in my opinion is more than enough to give you fully functional desktop environment and further more is fully customisable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2016/04/desktop.png&quot; alt=&quot;Desktop&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I am running my own &lt;a href=&quot;https://github.com/cnHeider/synapse&quot;&gt;fork&lt;/a&gt; of Synapse, which i re-themed and made some plug-ins for.&lt;/p&gt;
+
+&lt;p&gt;My conky configs is also included, but it is hardcoded for my 1366x756 resolution, but should be easily modifiable for any resolution.&lt;/p&gt;
+
+&lt;p&gt;Some resources:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/cnHeider/dotConfig&quot;&gt;DotConfig repo&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Sun, 06 Mar 2016 11:40:00 +0100</pubDate>
         <link>https://cnheider.net/2016/03/06/dotConfig.html</link>
