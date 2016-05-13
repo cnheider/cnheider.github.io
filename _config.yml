@@ -18,3 +18,7 @@ github_username: cnHeider
 markdown: kramdown
 
 exclude: [vendor]
+
+gems:
+  - jekyll-sitemap
+  - jekyll-seo-tag
