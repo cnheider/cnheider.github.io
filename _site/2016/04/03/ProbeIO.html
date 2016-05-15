@@ -77,154 +77,154 @@
 
 <p><a href="https://raw.githubusercontent.com/cnHeider/pio/master/src/main.cpp">main.cpp</a></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;ESP8266WiFi.h&gt;
-#include &lt;ESP8266WiFiMulti.h&gt;
-#include &lt;ESP8266mDNS.h&gt;
-#include &lt;ESP8266HTTPClient.h&gt;
-#include &lt;WiFiUdp.h&gt;
-#include &lt;WiFiClient.h&gt;
-#include &lt;PubSubClient.h&gt;
-#include &lt;LightSensor.h&gt;
-#include &lt;ArduinoOTA.h&gt;
-</span>
-<span class="cp">#ifndef WIFI_SSID
-#define WIFI_SSID "ReplaceThis"
+<p>```cpp
+#include <esp8266wifi.h>
+#include <esp8266wifimulti.h>
+#include <esp8266mdns.h>
+#include <esp8266httpclient.h>
+#include <wifiudp.h>
+#include <wificlient.h>
+#include <pubsubclient.h>
+#include <lightsensor.h>
+#include <arduinoota.h></arduinoota.h></lightsensor.h></pubsubclient.h></wificlient.h></wifiudp.h></esp8266httpclient.h></esp8266mdns.h></esp8266wifimulti.h></esp8266wifi.h></p>
+
+<h1 id="ifndef-wifissid">ifndef WIFI_SSID</h1>
+<p>#define WIFI_SSID “ReplaceThis”
 #endif
 #ifndef WIFI_PASS
-#define WIFI_PASS "ReplaceThis"
+#define WIFI_PASS “ReplaceThis”
 #endif
 #ifndef MQTT_SERVER
-#define MQTT_SERVER "m21.cloudmqtt.com"
+#define MQTT_SERVER “m21.cloudmqtt.com”
 #endif
 #ifndef MQTT_USER
-#define MQTT_USER "ReplaceThis"
+#define MQTT_USER “ReplaceThis”
 #endif
 #ifndef MQTT_PASS
-#define MQTT_PASS "ReplaceThis"
+#define MQTT_PASS “ReplaceThis”
 #endif
 #ifndef MQTT_PORT
 #define MQTT_PORT 15739 // MQTT_PORT default for me
 #endif
 #ifndef MQTT_TOPIC
-#define MQTT_TOPIC "lightingLivingRoom" // MQTT_TOPIC default for me
-#endif
-</span>
-<span class="n">WiFiClient</span> <span class="n">espClient</span><span class="p">;</span>
-<span class="n">PubSubClient</span> <span class="n">client</span><span class="p">(</span><span class="n">espClient</span><span class="p">);</span>
-<span class="kt">long</span> <span class="n">lastMsg</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="kt">char</span> <span class="n">msg</span><span class="p">[</span><span class="mi">50</span><span class="p">];</span>
-<span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+#define MQTT_TOPIC “lightingLivingRoom” // MQTT_TOPIC default for me
+#endif</p>
 
-<span class="kt">void</span> <span class="nf">callback</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">topic</span><span class="p">,</span> <span class="n">byte</span><span class="o">*</span> <span class="n">payload</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Message arrived ["</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">topic</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"] "</span><span class="p">);</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">((</span><span class="kt">char</span><span class="p">)</span><span class="n">payload</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-  <span class="p">}</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+<p>WiFiClient espClient;
+PubSubClient client(espClient);
+long lastMsg = 0;
+char msg[50];
+int value = 0;</p>
 
-  <span class="c1">// Switch on the LED if an 1 was received as first character
-</span>  <span class="k">if</span> <span class="p">((</span><span class="kt">char</span><span class="p">)</span><span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'1'</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUILTIN_LED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>   <span class="c1">// Turn the LED on (Note that LOW is the voltage level
-</span>    <span class="c1">// but actually the LED is on; this is because
-</span>    <span class="c1">// it is acive low on the ESP-01)
-</span>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BUILTIN_LED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>  <span class="c1">// Turn the LED off by making the voltage HIGH
-</span>  <span class="p">}</span>
+<p>void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print(“Message arrived [”);
+  Serial.print(topic);
+  Serial.print(“] “);
+  for (int i = 0; i &lt; length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();</p>
 
-<span class="p">}</span>
+<p>// Switch on the LED if an 1 was received as first character
+  if ((char)payload[0] == ‘1’) {
+    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
+    // but actually the LED is on; this is because
+    // it is acive low on the ESP-01)
+  } else {
+    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+  }</p>
 
-<span class="kt">void</span> <span class="nf">reconnect</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// Loop until we're reconnected
-</span>  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Attempting MQTT connection..."</span><span class="p">);</span>
-    <span class="c1">// Attempt to connect
-</span>    <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"ESP8266Client"</span><span class="p">,</span> <span class="n">MQTT_USER</span><span class="p">,</span> <span class="n">MQTT_PASS</span><span class="p">))</span> <span class="p">{</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"connected"</span><span class="p">);</span>
-      <span class="c1">// Once connected, publish an announcement...
-</span>      <span class="n">client</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="s">"alive"</span><span class="p">,</span> <span class="s">"hello world from ESP8266Client1"</span><span class="p">);</span>
-      <span class="c1">// ... and resubscribe
-</span>      <span class="n">client</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s">"inTopic"</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"failed, rc="</span><span class="p">);</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">state</span><span class="p">());</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" try again in 5 seconds"</span><span class="p">);</span>
-      <span class="c1">// Wait 5 seconds before retrying
-</span>      <span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<p>}</p>
 
-<span class="kt">void</span> <span class="nf">setup_wifi</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">WiFi</span><span class="p">.</span><span class="n">mode</span><span class="p">(</span><span class="n">WIFI_STA</span><span class="p">);</span>
-  <span class="n">WiFi</span><span class="p">.</span><span class="n">setPhyMode</span><span class="p">(</span><span class="n">WIFI_PHY_MODE_11N</span><span class="p">);</span> <span class="c1">// Low power
-</span>  <span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASS</span><span class="p">);</span>
-  <span class="k">while</span> <span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">waitForConnectResult</span><span class="p">()</span> <span class="o">!=</span> <span class="n">WL_CONNECTED</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Connection Failed! Rebooting..."</span><span class="p">);</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
-    <span class="n">ESP</span><span class="p">.</span><span class="n">restart</span><span class="p">();</span>
-  <span class="p">}</span>
+<p>void reconnect() {
+  // Loop until we’re reconnected
+  while (!client.connected()) {
+    Serial.println(“Attempting MQTT connection…”);
+    // Attempt to connect
+    if (client.connect(“ESP8266Client”, MQTT_USER, MQTT_PASS)) {
+      Serial.println(“connected”);
+      // Once connected, publish an announcement…
+      client.publish(“alive”, “hello world from ESP8266Client1”);
+      // … and resubscribe
+      client.subscribe(“inTopic”);
+    } else {
+      Serial.print(“failed, rc=”);
+      Serial.print(client.state());
+      Serial.println(“ try again in 5 seconds”);
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}</p>
 
-  <span class="c1">// Port defaults to 8266
-</span>  <span class="c1">// ArduinoOTA.setPort(8266);
-</span>
-  <span class="c1">// Hostname defaults to esp8266-[ChipID]
-</span>  <span class="c1">//ArduinoOTA.setHostname("ESP8266-WITTY-RGB");
-</span>
-  <span class="c1">// No authentication by default
-</span>  <span class="c1">//ArduinoOTA.setPassword((const char *)"admin");
-</span>
-  <span class="n">ArduinoOTA</span><span class="p">.</span><span class="n">onStart</span><span class="p">([]()</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Start"</span><span class="p">);</span>
-  <span class="p">});</span>
-  <span class="n">ArduinoOTA</span><span class="p">.</span><span class="n">onEnd</span><span class="p">([]()</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">End"</span><span class="p">);</span>
-  <span class="p">});</span>
-  <span class="n">ArduinoOTA</span><span class="p">.</span><span class="n">onProgress</span><span class="p">([](</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">progress</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">total</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"Progress: %u%%</span><span class="se">\r</span><span class="s">"</span><span class="p">,</span> <span class="p">(</span><span class="n">progress</span> <span class="o">/</span> <span class="p">(</span><span class="n">total</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)));</span>
-  <span class="p">});</span>
-  <span class="n">ArduinoOTA</span><span class="p">.</span><span class="n">onError</span><span class="p">([](</span><span class="n">ota_error_t</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"Error[%u]: "</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="n">OTA_AUTH_ERROR</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Auth Failed"</span><span class="p">);</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="n">OTA_BEGIN_ERROR</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Begin Failed"</span><span class="p">);</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="n">OTA_CONNECT_ERROR</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Connect Failed"</span><span class="p">);</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="n">OTA_RECEIVE_ERROR</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Receive Failed"</span><span class="p">);</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="n">OTA_END_ERROR</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"End Failed"</span><span class="p">);</span>
-  <span class="p">});</span>
-  <span class="n">ArduinoOTA</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"OTA Ready"</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"IP address: "</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">localIP</span><span class="p">());</span>
-<span class="p">}</span>
+<p>void setup_wifi() {
+  WiFi.mode(WIFI_STA);
+  WiFi.setPhyMode(WIFI_PHY_MODE_11N); // Low power
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+    Serial.println(“Connection Failed! Rebooting…”);
+    delay(5000);
+    ESP.restart();
+  }</p>
 
-<span class="kt">void</span> <span class="n">setup</span><span class="p">(){</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Booting"</span><span class="p">);</span>
-  <span class="n">setup_wifi</span><span class="p">();</span>
-  <span class="n">client</span><span class="p">.</span><span class="n">setServer</span><span class="p">(</span><span class="n">MQTT_SERVER</span><span class="p">,</span> <span class="n">MQTT_PORT</span><span class="p">);</span>
-  <span class="n">client</span><span class="p">.</span><span class="n">setCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">);</span>
-<span class="p">}</span>
+<p>// Port defaults to 8266
+  // ArduinoOTA.setPort(8266);</p>
 
-<span class="kt">void</span> <span class="n">loop</span><span class="p">(){</span>
-  <span class="n">ArduinoOTA</span><span class="p">.</span><span class="n">handle</span><span class="p">();</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">()){</span>
-    <span class="n">reconnect</span><span class="p">();</span>
-  <span class="p">}</span>
-  <span class="n">client</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+<p>// Hostname defaults to esp8266-[ChipID]
+  //ArduinoOTA.setHostname(“ESP8266-WITTY-RGB”);</p>
 
-  <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">LightSensor</span><span class="p">.</span><span class="n">getAveragedValueTimes</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-  <span class="n">snprintf</span> <span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="s">"device: %ld lighting: %ld"</span><span class="p">,</span> <span class="s">"0"</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Publish message: "</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
-  <span class="n">client</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">MQTT_TOPIC</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+<p>// No authentication by default
+  //ArduinoOTA.setPassword((const char *)”admin”);</p>
 
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Going to sleep for 8 sec"</span><span class="p">);</span>
-  <span class="n">ESP</span><span class="p">.</span><span class="n">deepSleep</span><span class="p">(</span><span class="mi">1000000</span><span class="o">*</span><span class="mi">8</span><span class="p">);</span> <span class="c1">// 8 seconds deepsleep
-</span>  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Sleeping"</span><span class="p">);</span> <span class="c1">// Should not be reached and printed
-</span><span class="p">}</span>
-</code></pre>
-</div>
+<p>ArduinoOTA.onStart([]() {
+    Serial.println(“Start”);
+  });
+  ArduinoOTA.onEnd([]() {
+    Serial.println(“\nEnd”);
+  });
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+    Serial.printf(“Progress: %u%%\r”, (progress / (total / 100)));
+  });
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf(“Error[%u]: “, error);
+    if (error == OTA_AUTH_ERROR) Serial.println(“Auth Failed”);
+    else if (error == OTA_BEGIN_ERROR) Serial.println(“Begin Failed”);
+    else if (error == OTA_CONNECT_ERROR) Serial.println(“Connect Failed”);
+    else if (error == OTA_RECEIVE_ERROR) Serial.println(“Receive Failed”);
+    else if (error == OTA_END_ERROR) Serial.println(“End Failed”);
+  });
+  ArduinoOTA.begin();
+  Serial.println(“OTA Ready”);
+  Serial.print(“IP address: “);
+  Serial.println(WiFi.localIP());
+}</p>
+
+<p>void setup(){
+  Serial.begin(115200);
+  Serial.println(“Booting”);
+  setup_wifi();
+  client.setServer(MQTT_SERVER, MQTT_PORT);
+  client.setCallback(callback);
+}</p>
+
+<p>void loop(){
+  ArduinoOTA.handle();
+  if (!client.connected()){
+    reconnect();
+  }
+  client.loop();</p>
+
+<p>int value = LightSensor.getAveragedValueTimes(6);
+  snprintf (msg, 75, “device: %ld lighting: %ld”, “0”, value);
+  Serial.print(“Publish message: “);
+  Serial.println(msg);
+  client.publish(MQTT_TOPIC, msg);</p>
+
+<p>Serial.println(“Going to sleep for 8 sec”);
+  ESP.deepSleep(1000000*8); // 8 seconds deepsleep
+  Serial.println(“Sleeping”); // Should not be reached and printed
+}
+```</p>
 
 <p>Some ressources:</p>
 
