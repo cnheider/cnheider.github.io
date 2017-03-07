@@ -6,7 +6,7 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: cnHeider
+title: Mostly incoherent
 email: detervidstnogetmed@hotmail.com
 description: >
   Ideas, theory and stuff..
@@ -14,11 +14,27 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://cnheider.net" # the base hostname & protocol for your site
 github_username: cnHeider
 
+google_analytics: GTM-WKWCC5
+
+# jekyll-seo-tag settings
+social:
+  name: Christian Heider Nielsen
+  links:
+    - http://github.com/cnheider
+
+
 # Build settings
 markdown: kramdown
-
-exclude: [vendor]
-
+permalink: /:title/
+sass:
+  style: compressed
 gems:
-  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-gist
+  - jekyll-redirect-from
   - jekyll-seo-tag
+  - jekyll-sitemap
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - CNAME
