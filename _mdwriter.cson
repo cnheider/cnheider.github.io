@@ -10,7 +10,7 @@
 # static engine of your blog
 siteEngine: "jekyll"
 # website of your blog
-siteUrl: "https://cnheider.net"
+siteUrl: "https://cnheider.github.io"
 # root directory of your blog
 siteLocalDir: "/home/heider/github/cnheider.github.io/"
 # directory to drafts from siteLocalDir

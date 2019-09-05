@@ -6,13 +6,13 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Incoherent Subjects
-email: detervidstnogetmed@hotmail.com
-description: >
-  Ideas, concepts and stuff..
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://cnheider.net" # the base hostname & protocol for your site
-github_username: cnHeider
+title:            Incoherent Subjects
+email:            detervidstnogetmed@hotmail.com
+description:      >
+                  Ideas, concepts and stuff..
+baseurl:          "" # the subpath of your site, e.g. /blog
+url:              "https://cnheider.net" # the base hostname & protocol for your site
+github_username:  cnHeider
 
 google_analytics: GTM-WKWCC5
 
@@ -25,8 +25,8 @@ social:
 
 
 # Build settings
-markdown: kramdown
-permalink: /:title/
+markdown:         kramdown
+permalink:        /:title/
 sass:
   style: compressed
 gems:
