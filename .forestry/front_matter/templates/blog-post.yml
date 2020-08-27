@@ -1,6 +1,23 @@
 ---
 label: Blog post
 hide_body: true
-fields: []
+fields:
+- name: text
+  type: textarea
+  default: ''
+  config:
+    required: false
+    wysiwyg: false
+    schema:
+      format: markdown
+  label: Text
+  description: sadasf
+- name: color
+  type: color
+  label: color
+  config:
+    required: false
+    color_format: Hex
+  description: sadasf
 pages:
 - Ok.md
