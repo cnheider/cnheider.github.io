@@ -19,6 +19,11 @@ fields:
     required: false
     color_format: Hex
   description: sadasf
+- name: dfsdsf
+  type: file
+  config:
+    maxSize: 64
+  label: dfsdsf
 pages:
 - Ok.md
 - gfdg.md
