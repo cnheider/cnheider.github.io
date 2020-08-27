@@ -7,4 +7,4 @@ gem "jekyll-seo-tag"
 gem "jekyll-feed"
 gem "jekyll-gist"
 gem "jekyll-redirect-from"
-
+gem 'jekyll-menus', '~> 0.6.1'
