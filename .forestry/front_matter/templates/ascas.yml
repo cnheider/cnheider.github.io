@@ -1,4 +1,16 @@
 ---
 label: ascas
 hide_body: false
-fields: []
+fields:
+- name: sad
+  type: textarea
+  default: ''
+  config:
+    required: false
+    wysiwyg: false
+    schema:
+      format: markdown
+  label: sad
+  description: asd
+pages:
+- afsaf.md
