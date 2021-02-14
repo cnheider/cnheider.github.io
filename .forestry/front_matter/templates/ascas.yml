@@ -1,14 +1,14 @@
 ---
-label:     ascas
+label: ascas
 hide_body: false
 fields:
-  - name:        sad
-    type:        textarea
-    default:     ''
-    config:
-      required: false
-      wysiwyg:  false
-      schema:
-        format: markdown
-    label:       sad
-    description: asd
+- name: sad
+  type: textarea
+  default: ''
+  config:
+    required: false
+    wysiwyg: false
+    schema:
+      format: markdown
+  label: sad
+  description: asd
