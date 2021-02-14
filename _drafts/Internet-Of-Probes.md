@@ -1,6 +1,5 @@
 ---
-layout: post
-title: Internet Of Probes
+layout: post title: Internet Of Probes
 ---
 
 Esp8266 project

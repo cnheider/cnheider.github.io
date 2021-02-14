@@ -1,6 +1,5 @@
 ---
-layout: post
-title: ESP8266 And Platform IO
+layout: post title: ESP8266 And Platform IO
 
 ---
 I am writing this little introduction because I found some great tools, that I think that every IoT or home automation enthusiasts should know and experience.

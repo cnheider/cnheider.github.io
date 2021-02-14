@@ -1,5 +1,4 @@
 ---
-layout: post
-title: InfluxDB
+layout: post title: InfluxDB
 ---
 Geant Testbed

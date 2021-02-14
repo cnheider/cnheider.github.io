@@ -1,6 +1,5 @@
 ---
-layout: post
-title: Easymotion plugin
+layout: post title: Easymotion plugin
 
 ---
 ![Easymotion](/images/2016/03/easymotion.png)

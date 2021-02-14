@@ -1,6 +1,5 @@
 ---
-layout: post
-title: ProbeIO
+layout: post title: ProbeIO
 
 ---
 This code is specifically developed for the Witty cloud development board, but can for sure be modified to be used on any other ESP8266 module. The Witty cloud development board includes a photo resistor which can be used to measure the light intensity of a room or environment.
