@@ -23,10 +23,9 @@ file_template: ":filename:"
 build:
   preview_env:
   - JEKYLL_ENV=staging
-  preview_output_directory: _site
-  install_dependencies_command: bundle install --path vendor/bundle
+  preview_output_directory: public
   preview_docker_image: forestryio/hugo:latest
   mount_path: "/srv"
-  instant_preview_command: bundle exec jekyll serve --drafts --unpublished --future
-    --port 8080 --host 0.0.0.0 -d _site
+  instant_preview_command: hugo server -D -E -F --port 8080 --bind 0.0.0.0 --renderToDisk
+    -d public
 version: 0.80.0
