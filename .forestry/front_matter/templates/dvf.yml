@@ -2,3 +2,5 @@
 label: dvf
 hide_body: false
 fields: []
+pages:
+- content/Welcome.md
