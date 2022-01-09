@@ -2,7 +2,7 @@
 baseURL: https://examplesite.com
 title: ExampleSite
 paginate: 5
-theme: PaperMod
+theme: themes/PaperMod
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
