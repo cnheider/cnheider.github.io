@@ -1,8 +1,8 @@
 ---
-baseURL: https://examplesite.com
-title: ExampleSite
+baseURL: https://cnheider.github.io
+title: CnHeider
 paginate: 5
-theme: themes/PaperMod
+theme: "PaperMod"
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
