@@ -25,7 +25,7 @@ social:
 
 
 # Build settings
-theme: "PaperMod"
+theme: "themes/PaperMod"
 markdown:         kramdown
 permalink:        /:title/
 sass:
