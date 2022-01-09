@@ -16,28 +16,3 @@ github_username:  cnHeider
 
 google_analytics: GTM-WKWCC5
 
-# jekyll-seo-tag settings
-social:
-  name: Christian Heider Nielsen
-  links:
-    - http://github.com/cnheider
-    - http://www.linkedin.com/in/cnheider
-
-
-# Build settings
-theme: "themes/PaperMod"
-markdown:         kramdown
-permalink:        /:title/
-sass:
-  style: compressed
-gems:
-  - jekyll-feed
-  - jekyll-gist
-  - jekyll-redirect-from
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-menus
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - CNAME
