@@ -8,3 +8,4 @@ gem "jekyll-feed"
 gem "jekyll-gist"
 gem "jekyll-redirect-from"
 gem 'jekyll-menus', '~> 0.6.1'
+gem "addressable", ">= 2.8.0"
