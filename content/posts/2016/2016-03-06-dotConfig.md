@@ -1,7 +1,11 @@
 ---
-layout: "post"
 title: "dotfiles"
-date: "2016-03-06 11:40"
+date: 2016-03-01T19:52:11Z
+draft: false
+toc: false
+images:
+tags:
+  - untagged
 ---
 
 After some personal requests for the [dotfiles](https://github.com/cnHeider/dotfiles) of my setups, I have published them on github.
