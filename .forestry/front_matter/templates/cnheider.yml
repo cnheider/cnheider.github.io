@@ -1,9 +1,0 @@
----
-label: cnheider
-hide_body: false
-fields:
-- name: sad
-  type: text
-  config:
-    required: false
-  label: sad
