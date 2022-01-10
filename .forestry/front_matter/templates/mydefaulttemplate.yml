@@ -7,5 +7,3 @@ fields:
   config:
     required: false
   label: title
-pages:
-- asd.md
