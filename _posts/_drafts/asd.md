@@ -1,6 +1,0 @@
----
-text: asd
-color: ''
-dfsdsf: ''
-
----
