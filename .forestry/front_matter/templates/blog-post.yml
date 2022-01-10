@@ -25,4 +25,5 @@ fields:
     maxSize: 64
   label: dfsdsf
 pages:
+- _posts/_drafts/asd.md
 - content/_posts/DS.md
