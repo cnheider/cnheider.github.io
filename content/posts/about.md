@@ -1,5 +1,5 @@
 ---
-layout: page title: About permalink: /about/
+title: About
 ---
 Profile - Facts
 
@@ -7,7 +7,5 @@ Profile - Facts
 
 ![Icon](/images/site/logo.png)
 
-- 23 years
 - Danish
-
-Software Engineering(Computer Science) student at Aalborg University, Denmark ![DK](/images/site/dk.png)
+- Lives in Aalborg, Denmark ![DK](/images/site/dk.png)
