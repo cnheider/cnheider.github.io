@@ -1,6 +1,6 @@
 ---
-baseURL: https://cnheider.github.io
-title: CnHeider
+baseURL: "https://cnheider.github.io"
+title: cnheider
 paginate: 5
 theme: "PaperMod"
 enableRobotsTXT: true
