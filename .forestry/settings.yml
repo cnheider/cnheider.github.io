@@ -9,13 +9,11 @@ sections:
   label: Everything
   create: all
   match: "**/*"
-- type: heading
-  label: Ok
 - type: jekyll-pages
   label: Pages
-  create: all
+  create: documents
 - type: heading
-  label: wtf
+  label: ____
 - type: jekyll-posts
   label: Posts
   create: all
