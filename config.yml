@@ -17,7 +17,7 @@ params:
   description: Ideas, concepts and stuff..
   author: Me
   images:
-    - "<link or path of image for opengraph, twitter-cards>"
+    - "images/site/logo.png"
   defaultTheme: auto
   disableThemeToggle: false
   ShowReadingTime: true
@@ -28,20 +28,20 @@ params:
   showtoc: false
   tocopen: false
   assets:
-    favicon: "<link / abs url>"
-    favicon16x16: "<link / abs url>"
-    favicon32x32: "<link / abs url>"
-    apple_touch_icon: "<link / abs url>"
-    safari_pinned_tab: "<link / abs url>"
+    favicon: "images/site/favicon.ico"
+    favicon16x16: "images/site/favicon.ico"
+    favicon32x32: "images/site/favicon.ico"
+    apple_touch_icon: "images/site/favicon.ico"
+    safari_pinned_tab: "images/site/favicon.ico"
   label:
     text: Home
-    icon: "/apple-touch-icon.png"
+    icon: "images/site/logo.png"
     iconHeight: 35
   profileMode:
     enabled: false
     title: ExampleSite
     subtitle: This is subtitle
-    imageUrl: "<img location>"
+    imageUrl: "images/site/logo.png"
     imageWidth: 120
     imageHeight: 120
     imageTitle: my image
