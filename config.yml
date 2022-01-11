@@ -7,6 +7,9 @@ enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+enableEmoji: true
+enableInlineShortcodes: true
+
 googleAnalytics: UA-123-45
 publishDir: "docs"
 minify:
@@ -28,6 +31,16 @@ params:
   hidemeta: false
   showtoc: false
   tocopen: false
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowToc: true
+  # comments: false
+  editPost:
+    URL: "https://github.com/cnheider/cnheider.github.io/tree/master/content"
+    Text: "Suggest Changes" # edit text
+    appendFilePath: true # to append file path to Edit link
   assets:
     favicon: "images/site/favicon.ico"
     favicon16x16: "images/site/favicon.ico"
@@ -86,3 +99,21 @@ menu:
       name: categories
       weight: 1
       identifier: categories
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    menu:
+      main:
+        - name: Archive
+          url: archives
+          weight: 5
+        - name: Search
+          url: search/
+          weight: 10
+        - name: Tags
+          url: tags/
+          weight: 10
+        - name: Categories
+          url: categories/
+          weight: 10
