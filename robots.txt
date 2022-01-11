@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://cnheider.github.io/sitemap.xml

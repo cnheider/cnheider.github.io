@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>untagged on Incoherent Subjects</title>
+    <link>https://cnheider.github.io/tags/untagged/</link>
+    <description>Recent content in untagged on Incoherent Subjects</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 03 Apr 2016 00:52:11 +0000</lastBuildDate><atom:link href="https://cnheider.github.io/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ProbeIO</title>
+      <link>https://cnheider.github.io/posts/2016/2016-04-03-probeio/</link>
+      <pubDate>Sun, 03 Apr 2016 00:52:11 +0000</pubDate>
+      
+      <guid>https://cnheider.github.io/posts/2016/2016-04-03-probeio/</guid>
+      <description>This code is specifically developed for the Witty cloud development board, but can for sure be modified to be used on any other ESP8266 module. The Witty cloud development board includes a photo resistor which can be used to measure the light intensity of a room or environment.
+The code measures the light intensity 6 times and average the value, easy and quick little fix(but for sure not proper the way) to eliminate any spurious noise from the readings of so-called light sensor.</description>
+    </item>
+    
+    <item>
+      <title>dotfiles</title>
+      <link>https://cnheider.github.io/posts/2016/2016-03-06-dotconfig/</link>
+      <pubDate>Tue, 01 Mar 2016 19:52:11 +0000</pubDate>
+      
+      <guid>https://cnheider.github.io/posts/2016/2016-03-06-dotconfig/</guid>
+      <description>After some personal requests for the dotfiles of my setups, I have published them on github.
+I am running Debian Strech, with non-free repos. My setup is minimal, I am running Openbox, Tint2, Feh and Synapse semantic launcher which in my opinion is more than enough to give you fully functional desktop environment and further more is fully customisable.
+I am running my own fork of Synapse, which i re-themed and made some plug-ins for.</description>
+    </item>
+    
+  </channel>
+</rss>
