@@ -3,3 +3,4 @@ _site/
 .jekyll-metadata
 _mdwriter.cson
 .remarkrc
+.hugo_build.lock
