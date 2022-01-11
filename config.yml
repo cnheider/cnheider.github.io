@@ -8,12 +8,13 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 googleAnalytics: UA-123-45
+publishDir: "docs"
 minify:
   disableXML: true
   minifyOutput: true
 params:
   env: production
-  title: ExampleSite
+  title: Incoherent Subjects
   description: Ideas, concepts and stuff..
   author: Me
   images:
