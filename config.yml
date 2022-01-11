@@ -1,6 +1,6 @@
 ---
 baseURL: "https://cnheider.github.io"
-title: cnheider
+title: Incoherent Subjects
 paginate: 5
 theme: "PaperMod"
 enableRobotsTXT: true
@@ -14,10 +14,10 @@ minify:
 params:
   env: production
   title: ExampleSite
-  description: ExampleSite description
+  description: Ideas, concepts and stuff..
   author: Me
   images:
-  - "<link or path of image for opengraph, twitter-cards>"
+    - "<link or path of image for opengraph, twitter-cards>"
   defaultTheme: auto
   disableThemeToggle: false
   ShowReadingTime: true
@@ -46,20 +46,16 @@ params:
     imageHeight: 120
     imageTitle: my image
     buttons:
-    - name: Posts
-      url: posts
-    - name: Tags
-      url: tags
+      - name: Posts
+        url: posts
+      - name: Tags
+        url: tags
   homeInfoParams:
     Title: "Hi there \U0001F44B"
     Content: Welcome to my blog
   socialIcons:
-  - name: twitter
-    url: https://twitter.com/
-  - name: stackoverflow
-    url: https://stackoverflow.com
-  - name: github
-    url: https://github.com/
+    - name: github
+      url: https://github.com/cnheider
   analytics:
     google:
       SiteVerificationTag: XYZabc
@@ -75,17 +71,17 @@ params:
     threshold: 0.4
     minMatchCharLength: 0
     keys:
-    - title
-    - permalink
-    - summary
-    - content
+      - title
+      - permalink
+      - summary
+      - content
 menu:
   main:
-  - url: "/tags/"
-    name: tags
-    weight: 2
-    identifier: tags
-  - url: "/categories/"
-    name: categories
-    weight: 1
-    identifier: categories
+    - url: "/tags/"
+      name: tags
+      weight: 2
+      identifier: tags
+    - url: "/categories/"
+      name: categories
+      weight: 1
+      identifier: categories

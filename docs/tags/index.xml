@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Incoherent Subjects</title>
+    <link>https://cnheider.github.io/tags/</link>
+    <description>Recent content in Tags on Incoherent Subjects</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 15 Sep 2020 11:30:03 +0000</lastBuildDate><atom:link href="https://cnheider.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>first</title>
+      <link>https://cnheider.github.io/tags/first/</link>
+      <pubDate>Tue, 15 Sep 2020 11:30:03 +0000</pubDate>
+      
+      <guid>https://cnheider.github.io/tags/first/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>untagged</title>
+      <link>https://cnheider.github.io/tags/untagged/</link>
+      <pubDate>Sun, 03 Apr 2016 00:52:11 +0000</pubDate>
+      
+      <guid>https://cnheider.github.io/tags/untagged/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
