@@ -39,7 +39,7 @@ params:
   # comments: false
   editPost:
     URL: "https://github.com/cnheider/cnheider.github.io/tree/master/content"
-    Text: "Suggest Changes" # edit text
+    Text: "Edit" # edit text
     appendFilePath: true # to append file path to Edit link
   assets:
     favicon: "images/site/favicon.ico"
@@ -65,7 +65,7 @@ params:
       - name: Tags
         url: tags
   homeInfoParams:
-    Title: "Hi there \U0001F44B"
+    Title: "Hello there \U0001F44B"
     Content: Welcome to my blog
   socialIcons:
     - name: github
